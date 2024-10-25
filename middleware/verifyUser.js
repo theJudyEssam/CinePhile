@@ -25,7 +25,7 @@ function verifyToken(req, res, next){
     
     try
     {
-        const decoded = jwt.verify(token, "4832812")
+        const decoded = jwt.verify(token, process.env.SECRET_KEY)
 
        // console.log(decoded.data);
        // console.log(req.params)

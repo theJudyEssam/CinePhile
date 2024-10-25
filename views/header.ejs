@@ -30,11 +30,11 @@
         <a href="/register"><button>Register</button></a>
     <% }
     else if (personalized) {%> 
-      <a href="user/<%=username %>/account"><button>Your Account</button></a>  
+      <a href="/user/<%=username %>/account"><button>Your Account</button></a>  
     <% } %>
 
  </div>             
-<form class="search-bar" action="user/<%= username %>/search" method="post">
+<form class="search-bar" action="/user/<%= username %>/search" method="post">
     <div class="search">
         <input type="text" class="search__input" name="title" placeholder="">
         <button class="search__button">

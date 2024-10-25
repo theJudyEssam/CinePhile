@@ -111,7 +111,7 @@ router.post("/login", async (req,res)=>{
 
                 else{
                     if(result){
-                        const token = jwt.sign({data:username},"4832812", {
+                        const token = jwt.sign({data:username}, process.env.SECRET_KEY, {
                             expiresIn: '1h',
                             });
 
