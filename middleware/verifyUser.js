@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-
 dotenv.config();
 
 function verifyToken(req, res, next){
@@ -19,12 +18,15 @@ function verifyToken(req, res, next){
     {
         if (!token)
         {
+            alert("You need to log in again!");
             return res.redirect('/user/login');
         }
     }
     
     try
     {
+        //verifying that the token is valid, while also checking that the username in the header is
+        //the same username in the 
         const decoded = jwt.verify(token, process.env.SECRET_KEY)
 
        // console.log(decoded.data);
@@ -47,7 +49,7 @@ function verifyToken(req, res, next){
     // console.log("Token: ", token);
     // console.log("Checking token validity...");
 
-    // next();
+ 
 }
 
 

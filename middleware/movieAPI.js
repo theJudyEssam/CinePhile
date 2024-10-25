@@ -2,20 +2,17 @@ import dotenv from 'dotenv';
 import axios from "axios";
 dotenv.config()
 
-
-const port = 3000;
-//const app = express();
-const API_KEY = process.env.API_KEY;
-const API_Token = process.env.API_TOKEN;
+//API authorization
+//const API_KEY = process.env.API_KEY;
+const API_Token = process.env.API_TOKEN; 
 const config = {
     headers: { Authorization: `Bearer ${API_Token}` },
   };
-
 const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTE2ZDAxOTcxMWNmYTVlN2QwN2JlZGFkOTFmOTY2NyIsIm5iZiI6MTcyMjAzMzM1MS40MDA4NDIsInN1YiI6IjY0NTRmMmVhYzA0NDI5MDE4NTcyNjE3NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tTKKLJ7jQwdgfD3mMcUWI3MCg3H-d5bOSt5XpkiQ7Ig'
+      Authorization: `Bearer ${API_Token}`
     }
   };
 
