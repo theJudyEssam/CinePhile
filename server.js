@@ -2,8 +2,17 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
-import fetch from "node-fetch";
+import router from "./routes/userAuth.js";
+import cors from 'cors';
+import cookieParser from "cookie-parser";
+import Prouter from "./routes/personalizeduser.js"
 
+
+// import fetch from "node-fetch";
+
+
+
+//TODO: isolate all these stuff in a separate file
 //Global Variables
 const port = 3000;
 const app = express();
@@ -19,6 +28,7 @@ const options = {
       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTE2ZDAxOTcxMWNmYTVlN2QwN2JlZGFkOTFmOTY2NyIsIm5iZiI6MTcyMjAzMzM1MS40MDA4NDIsInN1YiI6IjY0NTRmMmVhYzA0NDI5MDE4NTcyNjE3NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tTKKLJ7jQwdgfD3mMcUWI3MCg3H-d5bOSt5XpkiQ7Ig'
     }
   };
+
 
 
 //API urls
@@ -57,60 +67,89 @@ async function search(title){
         }
 }
 
+//----------------------------------------------------//
+
+
+app.use(cookieParser())
+app.use(cors({
+    origin: 'http://localhost:3000', // Update to match your frontend URL
+    credentials: true // Allow credentials to be passed (cookies)
+}));
+
 //Middlewares
-app.use(express.static("public"))
+app.use('/scripts', express.static('public/scripts'));
+app.use('/styles', express.static('public/styles'));
+app.use('/displays', express.static('public/displays'));
+
+//app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+
+
 //Routes
-app.get("/", async(req, res)=>{
-    try{
-        let populardata = await get_popular();
-        let discoverdata = await get_discover();
-        let upcomingdata = await get_upcoming();
-
-        //console.log(populardata);
-
-        res.render("home-page.ejs", 
-            {popular_titles:populardata, 
-            popular_images:populardata, 
-            discover_images: discoverdata, 
-            discover_titles: discoverdata, 
-            upcoming_titles: upcomingdata, 
-            upcoming_images: upcomingdata
-        })
-    }
-    catch(error){
-        console.log(error.message)
-    }
+app.get("/", (req, res)=>{
+    res.render("start.ejs")
    
 })
 
-app.get("/:title", async (req, res)=>{
-    console.log("I am in the /:title")
-    const title = req.params.title
-    try{
-        const result = await search(title);
-    res.render("movie-page.ejs", 
-        {movie_title:result[0].original_title, 
-         movie_overview:result[0].overview,
-         movie_rating:result[0].vote_average,
-         movie_poster : result[0].poster_path
-        })
-    }
-    catch(error){
-        console.log(error.message)
+
+app.get("/login", (req, res)=>{
+    res.render("login.ejs")
+})
+
+app.get("/register", (req, res)=>{
+    res.render("signup.ejs")
+})
+
+app.post("/login" , async (req, res)=>{
+    const username1 = req.body["username"];
+    const password1 = req.body["password"];
+  //  console.log("Login attemmpt:", password1);
+
+    try {
+
+        const loginResponse = await axios.post('http://localhost:3000/auth/login', {
+            username: username1,
+            password: password1
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+       // console.log("API response:", loginResponse);
+
+        if (loginResponse.status === 200) {
+            // The login was successful, set cookies if needed from the response
+           console.log("the token from loginResponse:" + loginResponse.data.token)
+
+            res.cookie('token', loginResponse.data.token, {
+                httpOnly: true, // Prevents JavaScript access to the cookie
+                maxAge: 3600000 // 1 hour
+            });
+
+            // Redirect to the personalized page
+            res.redirect(`/user/${username1}/homepage`);
+
+        } else {
+            res.status(403).send("Login failed");
+        }
+
+    } 
+    catch (error) {
+        console.error("Error during login process:",  error.message);
+        res.status(500).send("An error occurred during login");
     }
 })
 
-app.post("/search", async(req, res)=>{
-    console.log("I am in the /search")
-    const query = req.body["title"];
-    const resultz = await search(query);
-     console.log(query)
-    // console.log(result)
-     res.render("search-page.ejs", {result:resultz, search_query:query})
-})
+
+app.use("/auth",router)
+app.use("/user",Prouter);
+
+
+
 
 app.listen(port, ()=>{
     console.log(`Listening to port ${port}`);

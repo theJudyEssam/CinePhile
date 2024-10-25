@@ -3,7 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>MovieHub</title>
     <script src="https://kit.fontawesome.com/d8e6515723.js" crossorigin="anonymous"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='/styles/styles.css'>
@@ -24,8 +24,17 @@
         </ul>
 
         <div class="nav-btn">
-              
-<form class="search-bar" action="/search" method="post">
+ <div>
+    <% if (!personalized) { %>
+        <a href="/login"><button>Login</button></a>
+        <a href="/register"><button>Register</button></a>
+    <% }
+    else if (personalized) {%> 
+      <a href="user/<%=username %>/account"><button>Your Account</button></a>  
+    <% } %>
+
+ </div>             
+<form class="search-bar" action="user/<%= username %>/search" method="post">
     <div class="search">
         <input type="text" class="search__input" name="title" placeholder="">
         <button class="search__button">

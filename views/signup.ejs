@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <h1> Sign up</h1>
+    <form action="/user/register" method="post">
+        <label>First Name</label> 
+        <input name="first-name" required >
+        
+        <label>Last Name</label> 
+        <input name="last-name" required>    
+
+        <label>Username</label> 
+        <input name="username" required>
+
+        <label>Email </label> 
+        <input name="username" required>
+
+        <label>Password </label> 
+        <input type="password" name="username" required>
+        
+        <label> Gender </label>
+        <select name="gender" id="gen">
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+        </select>
+
+        <label>Age</label>
+        <input type="number" name="age"> 
+        
+        <button type="submit">Sign In</button>
+    </form>
+
+    <a href="/user/login">Already have an account?</a>
+</body>
+</html>
