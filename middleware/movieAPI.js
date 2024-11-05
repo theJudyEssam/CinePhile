@@ -54,4 +54,18 @@ async function search(title){
         }
 }
 
-export {get_popular, get_discover, get_upcoming, search}
+async function search_by_id(id){
+  //https://api.themoviedb.org/3/movie/343611?api_key=8e16d019711cfa5e7d07bedad91f9667
+  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}`;
+  try{
+    const response = await axios.get(url)
+    const result = response.data;
+   // console.log("the result is:" + result)
+    return result;  
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
+
+export {get_popular, get_discover, get_upcoming, search, search_by_id}

@@ -10,7 +10,18 @@
         <div class="m-tags">
             <h6>Rating: <%=movie_rating  %> </h6>
         <h6>Language: English</h6>
-        <button>Add to favourites</button>
+
+    
+        <% if (!favourite) { %>
+            <form>
+                <button type="submit" id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to favourites</button>
+            </form>
+        <% } else { %>
+            <form>
+                <button type="submit" id="remove-favourites" movieid="<%= movie_id %>" user-id="<%= username %>">Remove from favourites</button>
+            </form>
+        <% } %>
+        
         <button>Add to watchlist</button>
         </div>
         

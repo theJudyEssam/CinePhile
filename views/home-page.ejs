@@ -16,7 +16,7 @@
     <div  class="movie-view" id="popular">
         <% for(let i = 0; i < discover_titles.length; i++){ %>
 
-            <a class="poster" href="/user/<%= username %>/<%= discover_titles[i].original_title %>">
+            <a class="poster" href="/user/<%= username %>/<%= discover_titles[i].original_title %>/<%= discover_titles[i].id %>">
 
     
             <img class="movie-poster" src= "https://image.tmdb.org/t/p/original/<%= discover_images[i].poster_path %>">  
@@ -32,7 +32,7 @@
     <h1 class="genre-title">Popular</h1>
     <div class="movie-view"  id="popular">
         <% for(let i = 0; i < popular_titles.length; i++){ %>
-            <a class="poster" href="/user/<%= username %>/<%= popular_titles[i].original_title %>">
+            <a class="poster" href="/user/<%= username %>/<%= popular_titles[i].original_title %>/<%= popular_titles[i].id %>">
             <!-- <h3 style="font-size: 10px;"> <%= popular_titles[i].original_title%></h3> -->
             <img class="movie-poster" src= "https://image.tmdb.org/t/p/original/<%= popular_images[i].poster_path %>">
 </a>
@@ -46,7 +46,7 @@
     <div class="movie-view"id="popular">
         
         <% for(let i = 0; i < upcoming_titles.length; i++){ %>
-            <a class="poster" href="/user/<%= username %>/<%= upcoming_titles[i].original_title %>">
+            <a class="poster" href="/user/<%= username %>/<%= upcoming_titles[i].original_title %>/<%= upcoming_titles[i].id %>">
             <!-- <a class="poster" href="/user/<%= username %>/<%= upcoming_titles[i].original_title %>"> -->
 
             <!-- <h3 style="font-size: 10px;"> <%= upcoming_titles[i].original_title %></h3> -->

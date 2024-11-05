@@ -34,12 +34,14 @@ function verifyToken(req, res, next){
 
         req.data = decoded.data;
         if(decoded.data != req.params.username){
-            console.log("You need to log in again!")
+            console.log("You need to log in again!");
+            //window.alert("Session Timeout");
             return res.redirect('/login');
         }
 
         next();
     }
+    
     catch (error) {
         console.error("Token verification failed:", error.message);
         return res.status(401).json({ error: `Invalid token, ${error.message}` });

@@ -6,6 +6,7 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import Prouter from "./routes/personalizeduser.js"
 import dotenv from 'dotenv';
+import router1 from "./routes/favourites.js";
 // import fetch from "node-fetch";
 
 
@@ -36,7 +37,6 @@ app.get("/", (req, res)=>{
     res.render("start.ejs")
    
 })
-
 
 app.get("/login", (req, res)=>{
     res.render("login.ejs")
@@ -87,9 +87,9 @@ app.post("/login" , async (req, res)=>{
     }
 })
 
-
 app.use("/auth",router)
 app.use("/user",Prouter);
+app.use("/user", router1)
 
 
 app.listen(process.env.PORT, ()=>{

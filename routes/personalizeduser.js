@@ -2,14 +2,16 @@
 import verifyToken from "../middleware/verifyUser.js";
 import express from "express"
 import axios from "axios";
-import {get_popular, get_discover, get_upcoming, search} from "../middleware/movieAPI.js"
-
+import {get_popular, get_discover, get_upcoming, search, search_by_id} from "../middleware/movieAPI.js"
+import {get_userID, check_movieID} from "../middleware/database.js";
 const Prouter = express.Router()
 
 
 Prouter.get("/:username/homepage", verifyToken, async (req, res)=>{
 
     try{
+      //  let resu = await search_by_id(343611);
+        //console.log(resu);
 
         let populardata = await get_popular();
         let discoverdata = await get_discover();
@@ -40,24 +42,33 @@ Prouter.get("/:username/account",verifyToken ,(req, res)=>{
 })
 
 
-Prouter.get("/:username/:title",verifyToken ,async (req, res)=>{
+Prouter.get("/:username/:title/:id",verifyToken ,async (req, res)=>{
     // console.log("I am in the /:title")
      const title = req.params.title
+     const id = req.params.id
      const user = req.params.username
+     const user_id = await get_userID(user)
+     const is_favourite = await check_movieID(id, user_id)
+     console.log(is_favourite)
+     console.log(id)
    //  console.log("Searching for title:", title);
 
      try{
-         const result = await search(title);
-         
+         const result = await search_by_id(id);
+         console.log(result.original_title)
+         console.log(result.overview)
 
-         if (result && result.length > 0){
+         if (result || result.length > 0){
         res.render("movie-page.ejs", 
-         {movie_title:result[0].original_title, 
-          movie_overview:result[0].overview,
-          movie_rating:result[0].vote_average,
-          movie_poster : result[0].poster_path,
+         {movie_title:result.original_title, 
+          movie_overview:result.overview,
+          movie_rating:result.vote_average,
+          movie_poster : result.poster_path,
           personalized: false,
-          username:user
+          movie_id: id,
+          username:user,
+          userid :user_id, 
+          favourite:is_favourite
          })
          }
 
