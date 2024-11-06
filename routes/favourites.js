@@ -62,7 +62,7 @@ router1.delete("/:username/favourites/delete/:id" , async (req, res)=>{
     }
 })
 
-router1.get("/:username/favourites", async (req, res)=>{
+router1.get("/get/:username/favourites", async (req, res)=>{
     let username = req.params.username;
     try{
         const userid = await get_userID(username);

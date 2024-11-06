@@ -4,6 +4,7 @@ import express from "express"
 import axios from "axios";
 import {get_popular, get_discover, get_upcoming, search, search_by_id} from "../middleware/movieAPI.js"
 import {get_userID, check_movieID} from "../middleware/database.js";
+import router1 from "./favourites.js";
 const Prouter = express.Router()
 
 
@@ -99,6 +100,20 @@ Prouter.post("/:username/search",verifyToken ,async(req, res)=>{
       // console.log(result)
        res.render("search-page.ejs", {result:resultz, search_query:query,personalized: false, username: user})
   })
+
+
+//an incomplete route
+Prouter.get("/:username/favourites", verifyToken, async(req, res)=>{
+    const username = req.params.username
+
+    try{
+        let response = await axios.get(`http://localhost/user/get/${username}/favourites`);
+        
+    }
+    catch(error){
+
+    }
+})
   
 
 

@@ -13,13 +13,9 @@
 
     
         <% if (!favourite) { %>
-            <form>
-                <button type="submit" id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to favourites</button>
-            </form>
+            <button id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to favourites</button>
         <% } else { %>
-            <form>
-                <button type="submit" id="remove-favourites" movieid="<%= movie_id %>" user-id="<%= username %>">Remove from favourites</button>
-            </form>
+            <button id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>" class="added">Remove from favourites</button>
         <% } %>
         
         <button>Add to watchlist</button>
