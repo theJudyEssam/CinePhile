@@ -5,7 +5,29 @@ import axios from "axios";
 import {get_popular, get_discover, get_upcoming, search, search_by_id} from "../middleware/movieAPI.js"
 import {get_userID, check_movieID} from "../middleware/database.js";
 import router1 from "./favourites.js";
+
+
 const Prouter = express.Router()
+
+
+Prouter.get("/:username/favs", verifyToken, async (req, res)=>{
+    const username = req.params.username
+    // console.log("We are in the favourites ")
+    try
+    {
+        let response = await axios.get(`http://localhost:3000/user/get/${username}/favs`);
+        let movies = response.data.movies
+        res.render('favourites.ejs', {personalized:false, username:username})
+    }
+    catch(error)
+    {
+        console.log("There was an error: "+ error);
+        res.sendStatus(404)
+    }
+    //res.status(200).send("we are in the favourites page")
+  //  res.render('favourites.ejs', {personalized:false, username:username})
+})
+  
 
 
 Prouter.get("/:username/homepage", verifyToken, async (req, res)=>{
@@ -102,19 +124,6 @@ Prouter.post("/:username/search",verifyToken ,async(req, res)=>{
   })
 
 
-//an incomplete route
-Prouter.get("/:username/favourites", verifyToken, async(req, res)=>{
-    const username = req.params.username
-
-    try{
-        let response = await axios.get(`http://localhost/user/get/${username}/favourites`);
-        
-    }
-    catch(error){
-
-    }
-})
-  
 
 
 export default Prouter

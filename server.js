@@ -87,9 +87,9 @@ app.post("/login" , async (req, res)=>{
     }
 })
 
+app.use("/user", router1)
 app.use("/auth",router)
 app.use("/user",Prouter);
-app.use("/user", router1)
 
 
 app.listen(process.env.PORT, ()=>{

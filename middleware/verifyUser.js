@@ -18,7 +18,7 @@ function verifyToken(req, res, next){
     {
         if (!token)
         {
-            alert("You need to log in again!");
+            // alert("You need to log in again!");
             return res.redirect('/user/login');
         }
     }

@@ -24,6 +24,8 @@ db.connect().catch(err => console.error(err.stack))
 router1.use(cors());
 
 
+
+
 //we will have to call this API from the frontend part of the project
 router1.post("/:username/favourites/add/:id" , async (req, res)=>{
      //the username is stored in the header
@@ -62,20 +64,29 @@ router1.delete("/:username/favourites/delete/:id" , async (req, res)=>{
     }
 })
 
-router1.get("/get/:username/favourites", async (req, res)=>{
-    let username = req.params.username;
-    try{
-        const userid = await get_userID(username);
-        if(userid == -1) return res.status(403)
-        console.log(userid)
-        const results = await db.query("SELECT movie_id FROM favourites WHERE user_id = $1", [userid])
-        console.log("got the results")
-        return res.json({message: results.rows})
-    }
-    catch{
-        return res.status(404)
-    }
-})
+router1.get("/get/:username/favs", async (req, res)=>{
+      let username = req.params.username;
+      //return  res.status(200).send("we are here")
+       try{
+           const userid = await get_userID(username);
+           if(userid == -1)  return res.status(403).json({ message: "Forbidden: User not found or unauthorized." });
+   
+   
+           console.log(`Fetched user ID: ${userid}`);
+           const results = await db.query("SELECT movie_id FROM favourites WHERE user_id = $1", [userid]);
+   
+          // console.log("got the results")
+          return res.json({ movies: results.rows });
+       }
+       catch{
+           return res.status(404)
+       }
+   })
 
+// router1.get("/:username/stuff2/stuff3", (req, res) => {
+    
+//     return res.status(200).send("Test route working!");
+// });
+   
 
 export default router1

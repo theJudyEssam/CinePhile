@@ -2,15 +2,6 @@
 
 <h1>Favourites</h1>
 
-<div class="search-wrapper">
-<% for(let i = 0; i < result.length; i++){ %>
-
-    <a class="search-anchor" href="/user/<%= username %>/<%= result[i].original_title %>/<%= result[i].id %>">
-        <!-- <h3 style="font-size: 10px;"> <%= result[i].original_title%></h3> -->
-        <img class="search-poster"  src= "https://image.tmdb.org/t/p/original/<%= result[i].poster_path %>">  
-    </a>
-    <% } %>
-</div>
 
 
 <%- include('footer.ejs') %>
