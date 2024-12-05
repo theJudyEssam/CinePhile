@@ -60,12 +60,23 @@ async function search_by_id(id){
   try{
     const response = await axios.get(url)
     const result = response.data;
-   // console.log("the result is:" + result)
+ //   console.log("the result is:" + result)
     return result;  
     }
     catch(error){
         console.log(error.message)
     }
 }
+
+// async function get_movie_by_id(movie_id){
+//   try{
+//       let movies = await db.query("SELECT * FROM favourites WHERE user_id = $1 ")
+
+//   }
+//   catch{
+//       console.log("There is an error fetching movie from database")
+//       return -1
+//   }
+// }
 
 export {get_popular, get_discover, get_upcoming, search, search_by_id}

@@ -17,7 +17,10 @@ Prouter.get("/:username/favs", verifyToken, async (req, res)=>{
     {
         let response = await axios.get(`http://localhost:3000/user/get/${username}/favs`);
         let movies = response.data.movies
-        res.render('favourites.ejs', {personalized:false, username:username})
+        let user_id = response.data.user_id
+        // console.log(movies[0].movie_title)
+        // console.log(user_id)
+        res.render('favourites.ejs', {personalized:false, username:username, results:movies})
     }
     catch(error)
     {

@@ -9,7 +9,7 @@ import express from "express"
 import pg from "pg"
 import {get_userID, check_movieID} from "../middleware/database.js"
 import cors from "cors";
-
+import { search_by_id } from "../middleware/movieAPI.js";
 
 const router1 = express.Router()
 const db = new pg.Client({
@@ -72,11 +72,26 @@ router1.get("/get/:username/favs", async (req, res)=>{
            if(userid == -1)  return res.status(403).json({ message: "Forbidden: User not found or unauthorized." });
    
    
-           console.log(`Fetched user ID: ${userid}`);
+           // console.log(`Fetched user ID: ${userid}`);
            const results = await db.query("SELECT movie_id FROM favourites WHERE user_id = $1", [userid]);
-   
+           const movies_details = []
+           for(let i = 0; i < 5;i++){
+            const movie_detail = await search_by_id(results.rows[i].movie_id)
+            const movie = {
+                id: results.rows[i].movie_id,
+                movie_title : movie_detail.original_title,
+                movie_overview: movie_detail.overview,
+                movie_rating: movie_detail.vote_average,
+                movie_poster: movie_detail.poster_path
+            }
+            movies_details.push(movie)
+             
+           }
+
+          // console.log(movies_details)
+          
           // console.log("got the results")
-          return res.json({ movies: results.rows });
+          return res.json({ movies: movies_details , user_id: userid});
        }
        catch{
            return res.status(404)
