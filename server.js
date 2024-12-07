@@ -46,6 +46,66 @@ app.get("/register", (req, res)=>{
     res.render("signup.ejs")
 })
 
+
+app.post("/register" , async (req, res)=>{
+    const first_name = req.body["first-name"];
+    const last_name = req.body["last-name"];
+    const username = req.body["username"];
+    const email = req.body["email"];
+    const password = req.body["password"];
+    const gender = req.body["gender"];
+    const age = req.body["age"];
+    const phone_num = req.body["phone_num"]
+    
+
+    console.log(password)
+
+    try {
+
+        const signUpResponse = await axios.post('http://localhost:3000/auth/register', {
+            email:email,
+            password: password, 
+            first_name: first_name, 
+            last_name:last_name, 
+            username: username, 
+            age:age, 
+            gender:gender, 
+            phone_number:phone_num,
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+
+        if (signUpResponse.status === 200) {
+            // console.log("the token from loginResponse:" + loginResponse.data.token)
+
+            res.cookie('token', signUpResponse.data.token, {
+                httpOnly: true, // Prevents JavaScript access to the cookie
+                maxAge: 3600000 // 1 hour
+            });
+
+            // Redirect to the personalized page
+            res.redirect(`/user/${username}/homepage`);
+
+        } else {
+            res.status(403).send("Signup failed");
+        }
+
+    } 
+    catch (error) {
+        console.error("Error during Signup process:",  error.message);
+        res.status(500).send("An error occurred during Signup");
+    }
+})
+
+
+
+
+
+
 app.post("/login" , async (req, res)=>{
     const username1 = req.body["username"];
     const password1 = req.body["password"];

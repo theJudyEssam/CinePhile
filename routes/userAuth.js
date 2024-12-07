@@ -30,14 +30,16 @@ router.use(cookieParser())
 router.post("/register", async (req, res)=>{
    
     //uses body-parser to get the user's creditentials 
-    const first_name = req.body["first-name"]
-    const last_name = req.body["last-name"]
+    const first_name = req.body["first_name"]
+    const last_name = req.body["last_name"]
     const email = req.body["email"]
     const username = req.body["username"]
     const password =req.body["password"]
     const age = req.body["age"]
     const gender = req.body["gender"]
     const phone = req.body["phone_number"]
+
+    console.log(`Recieving ${first_name}`)
 
     try{
         // checks if user already exists

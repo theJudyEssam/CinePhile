@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1> Sign up</h1>
-    <form action="/user/register" method="post">
+    <form action="/register" method="post">
         <label>First Name</label> 
         <input name="first-name" required >
         
@@ -21,10 +21,10 @@
         <input name="username" required>
 
         <label>Email </label> 
-        <input name="username" required>
+        <input name="email" required>
 
         <label>Password </label> 
-        <input type="password" name="username" required>
+        <input type="password" name="password" required>
         
         <label> Gender </label>
         <select name="gender" id="gen">
@@ -34,6 +34,9 @@
 
         <label>Age</label>
         <input type="number" name="age"> 
+
+        <label>Age</label>
+        <input type="number" name="phone_num">
         
         <button type="submit">Sign In</button>
     </form>
