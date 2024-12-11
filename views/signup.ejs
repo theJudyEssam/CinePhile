@@ -1,46 +1,73 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
-</head>
-<body>
-    <h1> Sign up</h1>
-    <form action="/register" method="post">
-        <label>First Name</label> 
-        <input name="first-name" required >
+<%- include('partials/start_header.ejs') %>
+
+
+<div class="p-5 w-full md:mx text-white "> 
+
+    <h1 class="text-green-500 text-4xl font-bold mb-6"><span class="text-white">Your journey starts </span>here.</h1>
+
+    <form class="border border-green-500 rounded-lg p-5 gap-1 w-full" action="/register" method="post">
+
+        <ul class="w-full grid grid-cols-2 gap-[15px]">
+            <li class="authinput">
+                <label>First Name</label>
+                <input name="first-name" required>
+            </li>
+
+            <li class="authinput">
+                <label>Last Name</label>
+                <input name="last-name" required>
+            </li>
+            <li class="authinput">
+                <label>Username</label>
+                <input name="username" required>
+            </li>
+            <li class="authinput">
+
+                <label>Email</label>
+                <input name="email" required>
+            </li>
+            <li class="authinput">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </li>
+
+            <li class="authinput">
+                <label>Gender</label>
+                <input 
+                id="rating_input" 
+                type="number" 
+                placeholder="Enter your rating (1-5)"
+                min="1" max="5">
+            </li>
+
+            <li class="authinput">
+                <label>Age</label>
+                <input type="number" name="age">
+            </li>
+
+
+        </ul>
         
-        <label>Last Name</label> 
-        <input name="last-name" required>    
-
-        <label>Username</label> 
-        <input name="username" required>
-
-        <label>Email </label> 
-        <input name="email" required>
-
-        <label>Password </label> 
-        <input type="password" name="password" required>
+        <button class="px-4 py-2 m-[15px] text-center bg-green-500 text-white rounded-md" type="submit">Sign up</button>
         
-        <label> Gender </label>
-        <select name="gender" id="gen">
-            <option value="Female">Female</option>
-            <option value="Male">Male</option>
-        </select>
 
-        <label>Age</label>
-        <input type="number" name="age"> 
-
-        <label>Age</label>
-        <input type="number" name="phone_num">
-        
-        <button type="submit">Sign In</button>
+        <div class="mt-2 px-4">
+            <a href="/login" class="text-green-500 hover:underline">
+                Already have an account?
+            </a>
+        </div>
     </form>
 
-    <a href="/user/login">Already have an account?</a>
-</body>
-</html>
+
+
+
+</div>
+
+
+<!-- </div> -->
+  
+   
+
+
+
+<%- include('partials/start_footer.ejs') %>

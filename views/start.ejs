@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Movie Page</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='/styles/styles.css'>
-    <link href="/styles/output.css" rel="stylesheet">
-    <script src='/scripts/main.js'></script>
-</head>
-<body>
-    
+<%- include('partials/start_header.ejs') %>
+    <div class="bg-fixed flex items-center justify-center bg-black bg-opacity-50">
 
-    <div class="text-center p-5">
-        <h1 class="text-[50px] font-extrabold opacity-100">All your movies, in one place</h1>
-        <a href="/login"><button class="bg-green-500 pt-2.5 pb-2.5 pl-4 pr-4 border-white rounded-sm"> Login</button></a>
-        <!-- <a href="/sign"><button> Sign in</button></a> -->
-    </div>
+        <!-- Overlay Content -->
+        <div class="text-center p-6 sm:p-12 md:p-24">
+          <h1 class="text-4xl sm:text-5xl font-bold mb-6">
+            Discover Your Next Favorite Movie
+          </h1>
+          <p class="text-lg sm:text-xl mb-8">Browse our extensive collection of movies and shows.</p>
     
-</body>
-</html>
+          <!-- Call to Action Buttons -->
+          <div class="space-x-4">
+            <a href="/login" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">Login</a>
+            <a href="/register" class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">Sign Up</a>
+          </div>
+    
+       
+    
+      </div>
+    
+<%- include('partials/start_footer.ejs') %>

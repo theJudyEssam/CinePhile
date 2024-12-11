@@ -3,3 +3,20 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+    margin: 0px; 
+    padding: 0px;
+}
+
+.authinput{
+    @apply p-3 w-full float-left mb-0
+}
+
+.authinput label{
+    @apply block text-gray-400 mb-2;
+}
+
+.authinput input{
+    @apply block w-[100%] p-2 bg-gray-800 text-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none;
+
+}
