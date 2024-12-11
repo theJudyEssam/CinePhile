@@ -3,7 +3,7 @@ import verifyToken from "../middleware/verifyUser.js";
 import express from "express"
 import axios from "axios";
 import {get_popular, get_discover, get_upcoming, search, search_by_id} from "../middleware/movieAPI.js"
-import {get_userID, check_movieID} from "../middleware/database.js";
+import {get_userID, check_movieID, check_watchlist} from "../middleware/database.js";
 import router1 from "./favourites.js";
 
 
@@ -12,25 +12,45 @@ const Prouter = express.Router()
 
 Prouter.get("/:username/favs", verifyToken, async (req, res)=>{
     const username = req.params.username
-    // console.log("We are in the favourites ")
+    console.log("We are in the favourites ")
     try
     {
         let response = await axios.get(`http://localhost:3000/user/get/${username}/favs`);
         let movies = response.data.movies
-        let user_id = response.data.user_id
-        // console.log(movies[0].movie_title)
-        // console.log(user_id)
-        res.render('favourites.ejs', {personalized:false, username:username, results:movies})
+        console.log(movies)
+        res.render('favourites.ejs', {username:username, results:movies})
     }
     catch(error)
     {
         console.log("There was an error: "+ error);
         res.sendStatus(404)
     }
+   // res.render('favourites.ejs', {personalized:false, username:"ju",results:[1, 2, 3, 4]})
     //res.status(200).send("we are in the favourites page")
   //  res.render('favourites.ejs', {personalized:false, username:username})
 })
   
+
+
+Prouter.get("/:username/watchlist", verifyToken, async (req, res)=>{
+    const username = req.params.username
+    console.log("We are in the watchlist ")
+    try
+    {
+        let response = await axios.get(`http://localhost:3000/user/get/${username}/watch`);
+        let movies = response.data.movies
+        console.log(movies)
+        res.render('watchlist.ejs', {username:username, results:movies})
+    }
+    catch(error)
+    {
+        console.log("There was an error: "+ error);
+        res.sendStatus(404)
+    }
+   // res.render('favourites.ejs', {personalized:false, username:"ju",results:[1, 2, 3, 4]})
+    //res.status(200).send("we are in the favourites page")
+  //  res.render('favourites.ejs', {personalized:false, username:username})
+})
 
 
 Prouter.get("/:username/homepage", verifyToken, async (req, res)=>{
@@ -75,14 +95,16 @@ Prouter.get("/:username/:title/:id",verifyToken ,async (req, res)=>{
      const user = req.params.username
      const user_id = await get_userID(user)
      const is_favourite = await check_movieID(id, user_id)
-     console.log(is_favourite)
-     console.log(id)
+     const is_watched = await check_watchlist(id, user_id)
+    // console.log(is_favourite)
+    // console.log(id)
    //  console.log("Searching for title:", title);
 
      try{
          const result = await search_by_id(id);
-         console.log(result.original_title)
-         console.log(result.overview)
+         const comments = await axios.get(`http://localhost:3000/reviews/${id}/all`);
+         const data = comments.data.comments;
+        //  console.log(data[0].rating)
 
          if (result || result.length > 0){
         res.render("movie-page.ejs", 
@@ -94,7 +116,9 @@ Prouter.get("/:username/:title/:id",verifyToken ,async (req, res)=>{
           movie_id: id,
           username:user,
           userid :user_id, 
-          favourite:is_favourite
+          favourite:is_favourite,
+          watched:is_watched,
+          comments: data
          })
          }
 

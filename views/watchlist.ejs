@@ -1,0 +1,15 @@
+<%- include('header.ejs') %>
+
+<h1>Your Watchlist</h1>
+<div class="search-wrapper">
+    <% for(let i = 0; i < results.length; i++){ %>
+    
+        <a class="search-anchor" href="/user/<%= username %>/<%= results[i].movie_title %>/<%= results[i].id %>">
+            <!-- <h3 style="font-size: 10px;"> <%= results[i].original_title%></h3> -->
+            <img class="search-poster"  src= "https://image.tmdb.org/t/p/original/<%= results[i].movie_poster %>">  
+        </a>
+        <% } %>
+</div>
+    
+
+<%- include('footer.ejs') %>

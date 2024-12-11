@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import Prouter from "./routes/personalizeduser.js"
 import dotenv from 'dotenv';
 import router1 from "./routes/favourites.js";
+import c_router from "./routes/comments.js";
+import w_router from "./routes/watchlist.js";
 // import fetch from "node-fetch";
 
 
@@ -148,8 +150,10 @@ app.post("/login" , async (req, res)=>{
 })
 
 app.use("/user", router1)
+app.use("/user", w_router)
 app.use("/auth",router)
 app.use("/user",Prouter);
+app.use("/reviews",c_router)
 
 
 app.listen(process.env.PORT, ()=>{

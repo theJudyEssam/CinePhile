@@ -13,12 +13,17 @@
 
     
         <% if (!favourite) { %>
-            <button id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to favourites</button>
+            <button   id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to favourites</button>
         <% } else { %>
-            <button id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>" class="added">Remove from favourites</button>
+            <button  id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>" class="added">Remove from favourites</button>
         <% } %>
         
-        <button>Add to watchlist</button>
+        <% if (!watched) { %>
+            <button   id="watched_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to watchlist</button>
+        <% } else { %>
+            <button  id="watched_btn" movieid="<%= movie_id %>" user-id="<%= username %>" class="added">Remove from watchlist</button>
+        <% } %>
+        
         </div>
         
         
@@ -28,22 +33,57 @@
     </div>
     
 
-
 </div>
 
-<!-- 
-<div class="comment-section">
-    <div class="user-comment">
-        <label>Add your comment</label>
-        <input>
-    </div>
 
-    <div class="text-black">
-        <label class="text-black">User Comment</label>
-        <h6>hehehehehehe</h6>
-    </div>
+<div class="comment-section bg-black text-white rounded-lg p-6 shadow-lg">
+    <!-- Comment Form -->
+    <form class="flex flex-col gap-4" id="user-comment">
+        <label class="text-lg font-semibold">Add a Comment</label>
+        <input 
+            id="comment_input" 
+            class="p-2 border border-black rounded-md text-black" 
+            type="text" 
+            placeholder="Write your comment here..."
+        >
+        <input 
+            id="rating_input" 
+            type="number" 
+            class="p-2 border border-gray-600 rounded-md text-black" 
+            placeholder="Enter your rating (1-5)"
+            min="1" max="5"
+        >
+        <button 
+            id="comments-btn" 
+            class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md shadow-md" 
+            movieid="<%= movie_id %>" 
+            user-id="<%= username %>"
+        >
+            Post
+        </button>
+    </form>
 
-</div> -->
+    <!-- User Comments Section -->
+    <div id="user_comments" class="mt-6">
+        <% if (comments.length > 0) { %>
+            <% for (let i = 0; i < comments.length; i++) { %>
+                <div class="mb-4 p-4 border border-gray-600 rounded-md bg-gray-700">
+                    <h3 class="font-bold text-lg">
+                        <%= comments[i].username %> 
+                        <span class="text-yellow-400">
+                            <% for (let j = 0; j < comments[i].rating; j++) { %>
+                                &#9733;
+                            <% } %>
+                        </span>
+                    </h3>
+                    <p class="mt-2"><%= comments[i].comment %></p>
+                </div>
+            <% } %>
+        <% } else { %>
+            <p class="text-gray-400">No comments yet. Be the first to add one!</p>
+        <% } %>
+    </div>
+</div>
 
 
 

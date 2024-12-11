@@ -22,3 +22,62 @@ favourites_button.addEventListener("click", async function() {
         console.error("An error occurred", error);
     }
 });
+
+
+const watched_button = document.getElementById("watched_btn");
+
+watched_button.addEventListener("click", async function() {
+    const id = watched_button.getAttribute("movieid");
+    const userID = watched_button.getAttribute("user-id");
+
+    try {
+        let response;
+        const isWatched = watched_button.classList.contains("added");
+        if (isWatched) {
+            response = await axios.delete(`http://localhost:3000/user/${userID}/watchlist/delete/${id}`);
+        } else {
+            response = await axios.post(`http://localhost:3000/user/${userID}/watchlist/add/${id}`);
+        }
+
+        if (response.status === 200) {
+            watched_button.textContent = isWatched ? "Add to Watchlist" : "Remove from Watchlist";
+            watched_button.classList.toggle("added");
+        }
+    } catch (error) {
+        console.error("An error occurred", error);
+    }
+});
+
+
+
+const comments_btn = document.getElementById("comments-btn");
+
+comments_btn.addEventListener("click", async function(){
+    const id = favourites_button.getAttribute("movieid");
+    const userID = favourites_button.getAttribute("user-id");
+    const comment_val = document.getElementById("comment_input").value;
+    const ratings_val = document.getElementById("rating_input").value;
+
+    try{
+        let response = await axios.post(`http://localhost:3000/reviews/judyyyy/comment`,{
+            user_id:userID, 
+            movie_id: id,
+            comment: comment_val,
+            rating: ratings_val
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+
+        if(response.status == 200){
+            location.reload();
+        }
+    }
+    catch{
+        console.error("An error occurred", error);
+    }
+
+})

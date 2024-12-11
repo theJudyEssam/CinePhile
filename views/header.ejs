@@ -22,19 +22,15 @@
         </div>
 
         <ul class="menu">
-            <a class="menu-itm">Movies</a>
-            <a class="menu-itm"> TV Shows</a>
+            <a  href="/user/<%= username %>/favs" class="menu-itm">Favourites</a>
+            <a  href="/user/<%= username %>/watchlist" class="menu-itm">Watchlist</a>
         </ul>
 
         <div class="nav-btn">
  <div>
-    <% if (!personalized) { %>
-        <a href="/login"><button>Login</button></a>
-        <a href="/register"><button>Register</button></a>
-    <% }
-    else if (personalized) {%> 
-      <a href="/user/<%=username %>/account"><button>Your Account</button></a>  
-    <% } %>
+
+    <a href="/user/<%=username %>/account"><button>Your Account</button></a>  
+    
 
  </div>             
 <form class="search-bar" action="/user/<%= username %>/search" method="post">

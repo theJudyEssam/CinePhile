@@ -64,18 +64,22 @@ router1.delete("/:username/favourites/delete/:id" , async (req, res)=>{
     }
 })
 
+
+
 router1.get("/get/:username/favs", async (req, res)=>{
       let username = req.params.username;
+      //console.log(username)
       //return  res.status(200).send("we are here")
+
        try{
            const userid = await get_userID(username);
            if(userid == -1)  return res.status(403).json({ message: "Forbidden: User not found or unauthorized." });
    
-   
            // console.log(`Fetched user ID: ${userid}`);
            const results = await db.query("SELECT movie_id FROM favourites WHERE user_id = $1", [userid]);
+         
            const movies_details = []
-           for(let i = 0; i < 5;i++){
+           for(let i = 0; i < results.rows.length;i++){
             const movie_detail = await search_by_id(results.rows[i].movie_id)
             const movie = {
                 id: results.rows[i].movie_id,
@@ -87,10 +91,8 @@ router1.get("/get/:username/favs", async (req, res)=>{
             movies_details.push(movie)
              
            }
-
-          // console.log(movies_details)
+        
           
-          // console.log("got the results")
           return res.json({ movies: movies_details , user_id: userid});
        }
        catch{
@@ -98,10 +100,6 @@ router1.get("/get/:username/favs", async (req, res)=>{
        }
    })
 
-// router1.get("/:username/stuff2/stuff3", (req, res) => {
-    
-//     return res.status(200).send("Test route working!");
-// });
-   
+
 
 export default router1
