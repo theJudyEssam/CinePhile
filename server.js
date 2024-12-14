@@ -9,6 +9,8 @@ import dotenv from 'dotenv';
 import router1 from "./routes/favourites.js";
 import c_router from "./routes/comments.js";
 import w_router from "./routes/watchlist.js";
+import { get_popular } from "./middleware/movieAPI.js";
+
 // import fetch from "node-fetch";
 
 
@@ -35,8 +37,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //Routes
-app.get("/", (req, res)=>{
-    res.render("start.ejs")
+app.get("/", async (req, res)=>{
+    let data = await get_popular();
+    res.render("start.ejs", {movies: data})
    
 })
 

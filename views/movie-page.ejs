@@ -1,42 +1,80 @@
 <%- include('header.ejs') %>
 
 <div class="movie-wrapper">
-    <img    src= "https://image.tmdb.org/t/p/original/<%= movie_poster %>" 
-    class="m-poster"> 
+    <img src= "https://image.tmdb.org/t/p/original/<%= movie_poster %>" class="m-poster"> 
 
     <div class="m-description">
-
-        <h1 class="m-title"><%= movie_title %> </h1>
-        <div class="m-tags">
-            <h6>Rating: <%=movie_rating  %> </h6>
-        <h6>Language: English</h6>
-
-    
-        <% if (!favourite) { %>
-            <button   id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to favourites</button>
-        <% } else { %>
-            <button  id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>" class="added">Remove from favourites</button>
-        <% } %>
+        <div class="flex">
+            <% for(let i = 0; i < movie.genres.length; i++) {%>
+                <h6 class="text-sm px-[0.5] my-1 mx-1 italic text-green-500"> <%=  movie.genres[i].name %></h6>
+            <% } %>
+        </div>
         
-        <% if (!watched) { %>
-            <button   id="watched_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to watchlist</button>
-        <% } else { %>
-            <button  id="watched_btn" movieid="<%= movie_id %>" user-id="<%= username %>" class="added">Remove from watchlist</button>
-        <% } %>
+        <h1 class="text-[36px] font-bold"><%= movie_title %>: <%= movie.tagline %> </h1>
+               
+        
+        <div class="m-tags">
+
+            <div class="my-3">
+
+            <h6 class="px-1 text-sm">Rating: <span class="text-green-500"><%=movie_rating  %></span>  </h6>
+            <h6 class="px-1 text-sm">Language: <span class="text-green-500"><%= movie.original_language %></span></h6>
+    
+            </div>
+           
+
+
+            <% if (!favourite) { %>
+                <button  id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to favourites</button>
+            <% } else { %>
+                <button  id="favourites_btn" movieid="<%= movie_id %>" user-id="<%= username %>" class="added bg-green-700 p-1 rounded-sm">Remove from favourites</button>
+            <% } %>
+            
+            <% if (!watched) { %>
+                <button  id="watched_btn" movieid="<%= movie_id %>" user-id="<%= username %>">Add to watchlist</button>
+            <% } else { %>
+                <button  id="watched_btn" movieid="<%= movie_id %>" user-id="<%= username %>" class="added bg-green-700 p-1 rounded-sm ">Remove from watchlist</button>
+            <% } %>
         
         </div>
         
         
-        <p class="m-overview">
+        <p class="m-overview px-1">
           <%= movie_overview %>
         </p>
+        <div class="my-3">
+
+            <div class="flex">
+                <% for(let i = 0; i < movie.production_companies.length; i++) {%>
+                    <h6 class="text-sm px-1 my-1 mx-1 bg-green-500 rounded-sm"> <%=  movie.production_companies[i].name %></h6>
+                <% } %>
+            </div>
+        </div>
     </div>
     
 
 </div>
 
+<div>
+    <h1 class="text-[30px] px-9 font-semibold ">Similar Movies</h1>
+    <div class=" p-5 grid-flow-col gap-9">
+        <% for(let i = 0; i < recommentations.length-1; i++) { %>
+        
+            <a class="poster p-[20px] " href="/user/<%= username %>/<%= recommentations[i].original_title %>/<%= recommentations[i].id %>">
 
-<div class="comment-section bg-black text-white rounded-lg p-6 shadow-lg">
+    
+            <img class="movie-poster m-1" src= "https://image.tmdb.org/t/p/original/<%= recommentations[i].poster_path %>">  
+    
+           </a>
+        <% } %>
+    </div>
+</div>
+
+
+
+
+
+<div class="comment-section text-white rounded-lg p-6 shadow-lg">
     <!-- Comment Form -->
     <form class="flex flex-col gap-4" id="user-comment">
         <label class="text-lg font-semibold">Add a Comment</label>

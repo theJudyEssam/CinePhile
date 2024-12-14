@@ -1,11 +1,11 @@
-header{
+/* header{
     padding: 10rem;
     overflow: hidden;
     position: relative;
 }
 
 header img{
-  opacity: 0.3;
+ 
   position: absolute;
   left: 0;
   top: 0;
@@ -20,7 +20,7 @@ header img{
 .header-title{
     font-size: 60px;
     line-height: 42px;
-}
+} */
 
 .search-bar{
     text-align: right;
@@ -41,7 +41,7 @@ header img{
     background-color: #f4f2f2;
     border: none;
     color: rgb(179, 213, 179);
-    padding: 0.1rem 1em;
+    padding: 0.4rem 1.3em;
     border-radius: 28px;
     width: 12em;
     transition: all ease-in-out .5s;

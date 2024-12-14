@@ -68,6 +68,19 @@ async function search_by_id(id){
     }
 }
 
+async function get_recommentations(id){
+  const url = `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.API_KEY}`;
+  try{
+    const response = await axios.get(url)
+    const result = response.data;
+ //   console.log("the result is:" + result)
+    return result;  
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
+
 // async function get_movie_by_id(movie_id){
 //   try{
 //       let movies = await db.query("SELECT * FROM favourites WHERE user_id = $1 ")
@@ -79,4 +92,4 @@ async function search_by_id(id){
 //   }
 // }
 
-export {get_popular, get_discover, get_upcoming, search, search_by_id}
+export {get_popular, get_discover, get_upcoming, search, search_by_id, get_recommentations} 

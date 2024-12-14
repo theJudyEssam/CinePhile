@@ -1,12 +1,20 @@
 <%- include('header.ejs') %>
 
-<header>
-    <img src="/displays/poster-background-hlybuowt1whxbh2z.jpg">
 
-    <div class="header-textbox">
-        <h1 class="header-title">Movie<span style="color: lime;">Hub</span></h1>
-        <p class="header-para">All your movies, in one place.<span style="color: lime;"> All the time. Anywhere.</span></p>
+<header
+  class="w-full p-2 bg-cover bg-center h-64 text-white flex items-center "
+  style="background-position: center 30%; background-image: url('https://image.tmdb.org/t/p/original<%= popular_titles[0].backdrop_path %>');"
+>
+
+    <div class="relative pt-30">
+        <h1 class="text-[26px] font-extrabold p-2"><%= popular_titles[0].original_title %></h1>
+        <p class="text-[16px] w-[50%] p-3"><%= popular_titles[0].overview %></p>
+        <a href="/user/<%= username %>/<%= popular_titles[0].original_title %>/<%= popular_titles[0].id %>">
+            <button class="bg-green-500 rounded-sm p-1 m-3 text-[16px]">Learn More</button>
+        </a>
     </div>
+
+    
     
 </header>
 

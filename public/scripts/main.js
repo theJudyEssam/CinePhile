@@ -1,4 +1,5 @@
 
+
 const favourites_button = document.getElementById("favourites_btn");
 
 favourites_button.addEventListener("click", async function() {
@@ -52,15 +53,18 @@ watched_button.addEventListener("click", async function() {
 
 const comments_btn = document.getElementById("comments-btn");
 
+// fix this part
 comments_btn.addEventListener("click", async function(){
-    const id = favourites_button.getAttribute("movieid");
-    const userID = favourites_button.getAttribute("user-id");
+    
+    const id = comments_btn .getAttribute("movieid");
+    const userID = comments_btn .getAttribute("user-id");
     const comment_val = document.getElementById("comment_input").value;
     const ratings_val = document.getElementById("rating_input").value;
+    console.log(`${id} ${userID} ${comment_val} ${ratings_val}`);
+
 
     try{
-        let response = await axios.post(`http://localhost:3000/reviews/judyyyy/comment`,{
-            user_id:userID, 
+        let response = await axios.post(`http://localhost:3000/reviews/${userID}/comment`,{ 
             movie_id: id,
             comment: comment_val,
             rating: ratings_val
@@ -73,11 +77,13 @@ comments_btn.addEventListener("click", async function(){
 
 
         if(response.status == 200){
-            location.reload();
+            console.log("success")
+            // location.reload();
         }
     }
-    catch{
+    catch(error){
         console.error("An error occurred", error);
     }
 
 })
+

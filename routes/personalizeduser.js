@@ -2,7 +2,7 @@
 import verifyToken from "../middleware/verifyUser.js";
 import express from "express"
 import axios from "axios";
-import {get_popular, get_discover, get_upcoming, search, search_by_id} from "../middleware/movieAPI.js"
+import {get_popular, get_discover, get_upcoming, search, search_by_id, get_recommentations} from "../middleware/movieAPI.js"
 import {get_userID, check_movieID, check_watchlist} from "../middleware/database.js";
 import router1 from "./favourites.js";
 
@@ -96,6 +96,8 @@ Prouter.get("/:username/:title/:id",verifyToken ,async (req, res)=>{
      const user_id = await get_userID(user)
      const is_favourite = await check_movieID(id, user_id)
      const is_watched = await check_watchlist(id, user_id)
+     const recommendations = await get_recommentations(id);
+     console.log(recommendations)
     // console.log(is_favourite)
     // console.log(id)
    //  console.log("Searching for title:", title);
@@ -104,7 +106,7 @@ Prouter.get("/:username/:title/:id",verifyToken ,async (req, res)=>{
          const result = await search_by_id(id);
          const comments = await axios.get(`http://localhost:3000/reviews/${id}/all`);
          const data = comments.data.comments;
-        //  console.log(data[0].rating)
+         //console.log(result)
 
          if (result || result.length > 0){
         res.render("movie-page.ejs", 
@@ -112,6 +114,8 @@ Prouter.get("/:username/:title/:id",verifyToken ,async (req, res)=>{
           movie_overview:result.overview,
           movie_rating:result.vote_average,
           movie_poster : result.poster_path,
+          recommentations : recommendations.results, 
+          movie: result,
           personalized: false,
           movie_id: id,
           username:user,

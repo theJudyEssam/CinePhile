@@ -29,6 +29,7 @@ router1.use(cors());
 //we will have to call this API from the frontend part of the project
 router1.post("/:username/favourites/add/:id" , async (req, res)=>{
      //the username is stored in the header
+     console.log("add is clicked")
      let username = req.params.username
      try{
          //get the id of the said username
@@ -50,6 +51,7 @@ router1.post("/:username/favourites/add/:id" , async (req, res)=>{
 router1.delete("/:username/favourites/delete/:id" , async (req, res)=>{
     let username = req.params.username;
     let movie_id = req.params.id;
+    console.log("remove is clicked")
     try{
         //get the id of the said username
         let user_id = await get_userID(username);

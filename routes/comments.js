@@ -25,6 +25,7 @@ c_router.use(bodyParser.json());
 
 
 c_router.post("/:username/comment", async (req, res)=>{
+    console.log("this API has been called.")
     let comment = req.body["comment"];
     let rating = req.body["rating"];
     let movie_id = req.body["movie_id"];
