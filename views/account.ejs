@@ -1,7 +1,27 @@
 <%- include('header.ejs') %>
-    <h1>User: <%= username %></h1>
 
-    <a href="/user/<%= username %>/favs"> <button>Favourties</button></a>
+
+<div>
+    <div class="flex flex-col items-center bg-grey-500 p-5">
+        <img class="w-[20%]" src="/displays/person.png">
+        <h1 class="p-3 text-[44px]"><%= username %></h1>
+    </div>
+
+    <div class="p-2 bg-gray-900 m-[5rem] rounded-lg flex justify-center">
+        <!-- <h2 class="p-2">Name: </h2>
+        <h2 class="p-2">Gmail: </h2> -->
+        <div class="align-center">
+            <button class="px-4 py-2 text-white bg-green-600 hover:bg-green-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">Edit Profile</button>
+            <button class="px-4 py-2 text-green-600 bg-transparent border-2 border-green-600 hover:bg-green-600 hover:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">Delete Account</button>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+    
     
 
 

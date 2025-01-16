@@ -87,3 +87,31 @@ comments_btn.addEventListener("click", async function(){
 
 })
 
+
+
+
+// -------------------//
+
+const carousel = document.getElementById('carousel');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let currentIndex = 0;
+const totalSlides = carousel.children.length;
+
+function updateCarousel() {
+  const slideWidth = carousel.children[0].offsetWidth;
+  carousel.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+}
+
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+  updateCarousel();
+});
+
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % totalSlides;
+  updateCarousel();
+});
+
+window.addEventListener('resize', updateCarousel);

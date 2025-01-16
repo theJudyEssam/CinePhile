@@ -70,19 +70,20 @@ router1.delete("/:username/favourites/delete/:id" , async (req, res)=>{
 
 router1.get("/get/:username/favs", async (req, res)=>{
       let username = req.params.username;
-      //console.log(username)
+      console.log(username)
       //return  res.status(200).send("we are here")
 
        try{
            const userid = await get_userID(username);
            if(userid == -1)  return res.status(403).json({ message: "Forbidden: User not found or unauthorized." });
-   
+                
            // console.log(`Fetched user ID: ${userid}`);
            const results = await db.query("SELECT movie_id FROM favourites WHERE user_id = $1", [userid]);
-         
+           console.log("results from the API are " + results.rows[0].movie_id)
            const movies_details = []
-           for(let i = 0; i < results.rows.length;i++){
+           for(let i = 0; i < results.rows.length - 2;i++){
             const movie_detail = await search_by_id(results.rows[i].movie_id)
+            console.log(movie_detail.original_title)
             const movie = {
                 id: results.rows[i].movie_id,
                 movie_title : movie_detail.original_title,
@@ -91,13 +92,13 @@ router1.get("/get/:username/favs", async (req, res)=>{
                 movie_poster: movie_detail.poster_path
             }
             movies_details.push(movie)
-             
            }
         
           
           return res.json({ movies: movies_details , user_id: userid});
        }
-       catch{
+       catch(error){
+        console.log("sorry but  " + error.message)
            return res.status(404)
        }
    })

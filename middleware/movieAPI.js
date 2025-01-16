@@ -64,7 +64,7 @@ async function search_by_id(id){
     return result;  
     }
     catch(error){
-        console.log(error.message)
+        console.log("sorrrryy " + error.message)
     }
 }
 
